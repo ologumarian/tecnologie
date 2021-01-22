@@ -35,7 +35,8 @@ class _AuthFormState extends State<AuthForm> {
               FlatButton(
                 child: Text('Registrati'),
                 onPressed: () {},
-              )
+              ),
+              SizedBox(height: 25),
             ],
           )),
         ),
