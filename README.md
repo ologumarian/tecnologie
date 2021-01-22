@@ -1,7 +1,8 @@
 # documentive
 
 Documentive è un'app dedicata al salvataggio e alla gestione di documenti su cloud.
-L'utente ha la possibilità di organizzarli in progetti e suddividendoli in cartelle.
+L'utente ha la possibilità di organizzare i suoi documenti in progetti e di suddividerli
+in cartelle.
 
 ## Getting Started
 
