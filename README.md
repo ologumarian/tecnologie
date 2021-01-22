@@ -1,6 +1,7 @@
 # documentive
 
-A new Flutter project.
+Documentive è un'app dedicata al salvataggio e alla gestione di documenti su cloud.
+L'utente ha la possibilità di organizzarli in progetti e suddividendoli in cartelle.
 
 ## Getting Started
 
