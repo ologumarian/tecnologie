@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "786753062973",
+    "project_id": "app-tecnologie",
+    "storage_bucket": "app-tecnologie.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786753062973:android:c9f650be9311c836a10254",
+        "android_client_info": {
+          "package_name": "com.example.documentive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786753062973-rl3iqk4ai29geic140d07osmtoqvag2q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7NMcGYaw4vn5vD6KEV6SDzqX5UgPTXmc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "786753062973-rl3iqk4ai29geic140d07osmtoqvag2q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
