@@ -28,11 +28,11 @@ class _AuthFormState extends State<AuthForm> {
                 obscureText: true,
               ),
               SizedBox(height: 15),
-              RaisedButton(
+              ElevatedButton(
                 child: Text('Login'),
                 onPressed: () {},
               ),
-              FlatButton(
+              TextButton(
                 child: Text('Registrati'),
                 onPressed: () {},
               ),
