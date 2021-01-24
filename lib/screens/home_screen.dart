@@ -17,29 +17,47 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      transform: Matrix4.translationValues(xOffset, yOffset, 0)
-        ..scale(scaleFactor)
-        ..rotateY(isDrawerOpen ? -0.5 : 0),
-      duration: Duration(milliseconds: 250),
-      decoration: BoxDecoration(
-          color: Colors.grey[200],
-          borderRadius: BorderRadius.circular(isDrawerOpen ? 40 : 0.0)),
-      child: SingleChildScrollView(
+    final deviceHeight = MediaQuery.of(context).size.height;
+    final deviceWidth = MediaQuery.of(context).size.width;
+
+    return GestureDetector(
+      onTap: isDrawerOpen
+          ? () {
+              //chiusura drawer
+              setState(() {
+                xOffset = 0;
+                yOffset = 0;
+                scaleFactor = 1;
+                isDrawerOpen = false;
+              });
+            }
+          : () {},
+      child: AnimatedContainer(
+        transform: Matrix4.translationValues(xOffset, yOffset, 0)
+          ..scale(scaleFactor)
+          ..rotateY(isDrawerOpen ? -0.5 : 0),
+        duration: Duration(milliseconds: 350),
+        curve: Curves.easeInOutCirc,
+        // decoration: BoxDecoration(
+        //     color: Colors.grey[200],
+        //     borderRadius: BorderRadius.circular(isDrawerOpen ? 40 : 0.0)),
         child: Container(
-          height: MediaQuery.of(context).size.height,
-          //DROP SHADOW PER SCREEN ON DRAWER OPENING
-          // decoration: BoxDecoration(
-          //   boxShadow: [
-          //     BoxShadow(
-          //       color: Colors.black26,
-          //       blurRadius: 15,
-          //       spreadRadius: 9,
-          //       offset: const Offset(-10, 10),
-          //     )
-          //   ],
-          // ),
-          child: SafeArea(
+          height: deviceHeight,
+          padding: EdgeInsets.only(top: 25),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(35),
+            color: Theme.of(context).backgroundColor,
+            boxShadow: [
+              //DROP SHADOW PER SCREEN ON DRAWER OPENING
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 15,
+                spreadRadius: 9,
+                offset: const Offset(-10, 10),
+              )
+            ],
+          ),
+          child: SingleChildScrollView(
             child: Column(
               children: [
                 Container(
@@ -61,14 +79,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                 });
                               },
                             )
+                          //BUTTON APERTURA DRAWER
                           : IconButton(
                               icon: Icon(Icons.menu),
                               iconSize: dimBackButton,
                               onPressed: () {
                                 setState(() {
-                                  xOffset = 230;
-                                  yOffset = 150;
-                                  scaleFactor = 0.6;
+                                  xOffset = deviceWidth / 2 + 25;
+                                  yOffset =
+                                      (deviceHeight - deviceHeight * 0.8) / 2;
+                                  //yOffset per la metà dello schermo dopo 0.6 scale
+                                  scaleFactor = 0.8;
                                   isDrawerOpen = true;
                                 });
                               }),
@@ -85,12 +106,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 25,
-                      )
+                      SizedBox(width: 50)
                     ],
                   ),
                 ),
+                //INTERFACCIA...
               ],
             ),
           ),

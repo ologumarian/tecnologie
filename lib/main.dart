@@ -1,6 +1,8 @@
-import 'package:documentive/screens/drawer_screen.dart';
-import 'package:documentive/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import './screens/drawer_screen.dart';
+import './screens/home_screen.dart';
 
 //import './screens/auth_screen.dart';
 
@@ -12,11 +14,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.dark, // status bar color
+    ));
+    SystemChrome.setEnabledSystemUIOverlays([]); //nasconde la status bar
+
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.red,
         accentColor: Colors.red[900],
         bottomAppBarColor: Colors.red[900], //per drawer
+        backgroundColor: Colors.white,
       ),
       home: HomePage(),
     );
