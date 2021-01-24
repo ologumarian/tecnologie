@@ -65,15 +65,26 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 ),
               ],
             ),
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.exit_to_app, color: Colors.white),
-                SizedBox(width: 10),
-                Text(
-                  'Log out',
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                )
+                // Container(
+                //   color: Colors.white,
+                //   child: Image.asset('assets/images/large_documentive.png'),
+                //   height: 100,
+                // ),
+                // SizedBox(height: 25),
+                Row(
+                  children: [
+                    Icon(Icons.exit_to_app, color: Colors.white),
+                    SizedBox(width: 10),
+                    Text(
+                      'Log out',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
               ],
             )
           ],

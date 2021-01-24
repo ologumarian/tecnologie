@@ -17,7 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final deviceHeight = MediaQuery.of(context).size.height;
+    final statusBarHeight = MediaQuery.of(context).padding.top;
+    final deviceHeight = MediaQuery.of(context).size.height - statusBarHeight;
     final deviceWidth = MediaQuery.of(context).size.width;
 
     return GestureDetector(
@@ -45,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
           height: deviceHeight,
           padding: EdgeInsets.only(top: 25),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(35),
+            borderRadius: BorderRadius.circular(isDrawerOpen ? 35 : 35),
             color: Theme.of(context).backgroundColor,
             boxShadow: [
               //DROP SHADOW PER SCREEN ON DRAWER OPENING
@@ -98,9 +99,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Container(
                         alignment: Alignment.center,
                         child: Text(
-                          'Documentive',
+                          'Progetti',
                           style: TextStyle(
-                            color: Colors.black54,
+                            color: Colors.black87,
                             fontSize: dimBackButton,
                             fontWeight: FontWeight.bold,
                           ),

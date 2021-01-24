@@ -1,3 +1,4 @@
+import 'package:documentive/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -21,9 +22,9 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.red,
-        accentColor: Colors.red[900],
-        bottomAppBarColor: Colors.red[900], //per drawer
+        primarySwatch: Colors.blueGrey,
+        accentColor: Colors.red[800],
+        bottomAppBarColor: Colors.red[800], //per drawer
         backgroundColor: Colors.white,
       ),
       home: HomePage(),
