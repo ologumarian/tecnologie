@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import './screens/drawer_screen.dart';
 import './screens/home_screen.dart';
 import './screens/auth_screen.dart';
-import './screens/splash_screen.dart';
+//import './screens/splash_screen.dart';
 
 //import './screens/auth_screen.dart';
 
