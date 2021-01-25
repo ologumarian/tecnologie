@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../config/configuration.dart';
 
 class DrawerScreen extends StatefulWidget {
@@ -76,12 +78,25 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 // SizedBox(height: 25),
                 Row(
                   children: [
-                    Icon(Icons.exit_to_app, color: Colors.white),
-                    SizedBox(width: 10),
-                    Text(
-                      'Log out',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                    TextButton(
+                      child: Row(
+                        children: [
+                          Icon(Icons.exit_to_app, color: Colors.white),
+                          SizedBox(width: 10),
+                          Text(
+                            'Log out',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      onPressed: () {
+                        //LOGOUT DELL'UTENTE:
+                        //Distrugge il tocken e salta la condizione dello StreamBuilder nel main
+                        FirebaseAuth.instance.signOut();
+                      },
                     )
                   ],
                 ),
