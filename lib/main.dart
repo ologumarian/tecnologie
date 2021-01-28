@@ -11,7 +11,7 @@ import './screens/auth_screen.dart';
 
 //import './screens/auth_screen.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); //NUOVA CONFIG FIREBASE #4
   await Firebase.initializeApp(); //Inizializza app collegata a Firbase
 
@@ -32,15 +32,18 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
         accentColor: Colors.red[800],
         bottomAppBarColor: Colors.red[800], //per drawer
+        textTheme: TextTheme(
+          bodyText1: TextStyle(color: Colors.grey[100]), 
+        ),
         backgroundColor: Colors.white,
       ),
       home: StreamBuilder(
-        stream: FirebaseAuth.instance.idTokenChanges(),
+        stream: FirebaseAuth.instance.idTokenChanges(), //Listener sul Token
         builder: (ctx, userSnapshot) {
           if (userSnapshot.hasData) {
-            return HomePage();
+            return HomePage(); //Se il Token è valido viene visualizzata la HomePage
           }
-          return AuthScreen();
+          return AuthScreen(); //Se il Token non esiste o non è valido viene caricato lo AuthScreen
         },
       ),
     );
@@ -55,15 +58,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //NUOVA CONFIG FIREBASE #3
-  @override
-  void initState() {
-    super.initState();
-    Firebase.initializeApp().whenComplete(() {
-      print("completed");
-      setState(() {});
-    });
-  }
+  // //NUOVA CONFIG FIREBASE #3
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Firebase.initializeApp().whenComplete(() {
+  //     print("completed");
+  //     setState(() {});
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

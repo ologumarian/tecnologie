@@ -25,46 +25,57 @@ class _AuthScreenState extends State<AuthScreen> {
     BuildContext ctx,
   ) async {
     UserCredential authResult; //Era il vecchio AuthResult
-
     try {
       setState(() {
         _isLoading = true; //triggera la rotellina di caricamento
       });
+
+      // LOG IN UTENTE
       if (isLogin) {
         authResult = await _auth.signInWithEmailAndPassword(
           email: email,
           password: password,
         );
-      } else {
+        print('LOG IN CON EMAIL E PASSWORD');
+      }
+
+      // REGISTRAZIONE UTENTE
+      else {
         authResult = await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(authResult.user.uid)
+            .set({
+          'username': username,
+          'email': email,
+        });
+
+        print('REGISTRAZIONE CON EMAIL E PASSWORD');
       }
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(authResult.user.uid)
-          .set({
-        'username': username,
-        'email': email,
-      });
     } on PlatformException catch (err) {
       var message = 'Qualcosa non va, prova a controllare le tue credenziali!';
-
       if (err.message != null) {
-        message = err.message;
+        message = err.message.toString();
       }
-
+      ScaffoldMessenger.of(ctx).hideCurrentSnackBar();
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(
           content: Text(message),
         ),
       );
+      //print('ERRORE AUTENTICAZIONE:' + message);
       setState(() {
         _isLoading = false;
       });
     } catch (err) {
-      print(err);
+      //print('ERRORE GENERICO:' + err.toString());
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
