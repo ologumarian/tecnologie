@@ -58,24 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         padding: EdgeInsets.only(top: 25, left: 25, right: 25),
         duration: Duration(milliseconds: 350),
-        curve: Curves.fastOutSlowIn,
+        curve: isDrawerOpen ? Curves.easeOutCubic : Curves.easeInBack,
 
         //CHILD
-        // child: Container(
-        //   height: deviceHeight,
-        //   padding: EdgeInsets.all(25),
-        //   decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.circular(35),
-        //     color: Theme.of(context).backgroundColor,
-        //     boxShadow: [
-        //       BoxShadow(
-        //         color: Colors.black12,
-        //         blurRadius: 15,
-        //         spreadRadius: 9,
-        //         offset: const Offset(-10, 10),
-        //       )
-        //     ],
-        //   ),
         child: Column(
           children: [
             //APPBAR
