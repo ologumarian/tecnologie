@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../widgets/projects_list.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -51,12 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
             BoxShadow(
               color: Colors.black12,
               blurRadius: 15,
-              spreadRadius: 9,
+              spreadRadius: 5,
               offset: const Offset(-10, 10),
             )
           ],
         ),
-        padding: EdgeInsets.only(top: 25, left: 25, right: 25),
+        padding: EdgeInsets.only(top: 25),
         duration: Duration(milliseconds: 350),
         curve: isDrawerOpen ? Curves.easeOutCubic : Curves.easeInBack,
 
@@ -65,10 +67,11 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             //APPBAR
             Container(
+              padding: EdgeInsets.only(right: 25, left: 25, bottom: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  //ICON BUTTON
+                  //SCREEN ICON BUTTON (BACK/DRAWER)
                   Center(
                     child: isDrawerOpen
                         //DRAWER/BACK BUTTON
@@ -101,7 +104,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               });
                             }),
                   ),
-
                   //SCREEN TITLE
                   Container(
                     alignment: Alignment.center,
@@ -114,35 +116,43 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+                  //PADDING FOR BALANCING Screen Icon
                   SizedBox(width: 50)
                 ],
               ),
             ),
 
-            //INTERFACCIA..
+            //INTERFACCIA
             Expanded(
               child: Stack(
                 children: [
+                  //LISTA PROGETTI
+                  ProjectsList(
+                      isDrawerOpen), //Gli passo la flag per bloccare le gesture quando il drawer è aperto
+
                   //BUTTON CREA PROGETTO
                   Positioned(
                     bottom: 25,
-                    right: 0,
+                    right: 25,
                     child: FloatingActionButton.extended(
                       icon: Icon(
                         Icons.add,
                         color: Colors.grey[100],
                       ),
                       label: Text('Crea Progetto'),
-                      onPressed: () {},
+                      elevation: 9,
+                      onPressed: isDrawerOpen
+                          ? () {} //Se il
+                          : () {
+                              //Implementare azione CREA PROGETTO
+                            },
                     ),
                   ),
-                  //ProjectsList(),
                 ],
               ),
             ),
           ],
         ),
-        // ),
       ),
     );
   }

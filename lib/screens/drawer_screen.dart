@@ -17,7 +17,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
     return SafeArea(
       child: Container(
         color: theme ? Theme.of(context).bottomAppBarColor : Colors.white,
-        padding: EdgeInsets.only(left: 15, top: 44, bottom: 24, right: 200),
+        padding: EdgeInsets.only(
+          left: 15,
+          top: 44,
+          bottom: 24,
+          right: 200,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
