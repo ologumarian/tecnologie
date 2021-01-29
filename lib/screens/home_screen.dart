@@ -11,7 +11,7 @@ class _HomeScreenState extends State<HomeScreen> {
   double xOffset = 0;
   double yOffset = 0;
   double scaleFactor = 1;
-  double borderRadius = 0;
+  BorderRadiusGeometry borderRadius = BorderRadius.circular(0);
 
   final dimBackButton = 34.0;
 
@@ -33,113 +33,131 @@ class _HomeScreenState extends State<HomeScreen> {
                 xOffset = 0;
                 yOffset = 0;
                 scaleFactor = 1;
-                borderRadius = 0;
+                borderRadius = BorderRadius.circular(0);
                 isDrawerOpen = false;
               });
             }
           : () {},
       child: AnimatedContainer(
+        //ANIMATION
         transform: Matrix4.translationValues(xOffset, yOffset, 0)
           ..scale(scaleFactor),
         //..rotateY(isDrawerOpen ? -0.5 : 0),  //Distorsione asse x
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: borderRadius,
+          //DROP SHADOW PER SCREEN ON DRAWER OPENING
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 15,
+              spreadRadius: 9,
+              offset: const Offset(-10, 10),
+            )
+          ],
+        ),
+        padding: EdgeInsets.only(top: 25, left: 25, right: 25),
         duration: Duration(milliseconds: 350),
-        curve: Curves.easeInOut,
-        onEnd: () {
-          borderRadius = 0;
-        },
-        // decoration: BoxDecoration(
-        //     color: Colors.grey[200],
-        //     borderRadius: BorderRadius.circular(isDrawerOpen ? 40 : 0.0)),
-        child: Container(
-          height: deviceHeight,
-          padding: EdgeInsets.only(top: 25),
-          decoration: BoxDecoration(
-            //borderRadius: BorderRadius.circular(isDrawerOpen ? 35 : 35),
-            borderRadius: BorderRadius.circular(borderRadius),
-            color: Theme.of(context).backgroundColor,
-            //DROP SHADOW PER SCREEN ON DRAWER OPENING
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 15,
-                spreadRadius: 9,
-                offset: const Offset(-10, 10),
-              )
-            ],
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      //ICON BUTTON
-                      Center(
-                        child: isDrawerOpen
-                            //DRAWER/BACK BUTTON
-                            ? IconButton(
-                                icon: Icon(Icons.arrow_back_ios),
-                                iconSize: dimBackButton,
-                                onPressed: () {
-                                  setState(() {
-                                    xOffset = 0;
-                                    yOffset = 0;
-                                    scaleFactor = 1;
-                                    //borderRadius = 0;
-                                    isDrawerOpen = false;
-                                  });
-                                },
-                              )
-                            //BUTTON APERTURA DRAWER
-                            : IconButton(
-                                icon: Icon(Icons.menu),
-                                iconSize: dimBackButton,
-                                onPressed: () {
-                                  setState(() {
-                                    xOffset = deviceWidth / 2 + 25;
-                                    yOffset =
-                                        (deviceHeight - deviceHeight * 0.8) / 2;
-                                    //yOffset per la metà dello schermo dopo 0.6 scale
-                                    scaleFactor = 0.8;
-                                    borderRadius = 35;
-                                    isDrawerOpen = true;
-                                  });
-                                }),
-                      ),
-                      //SCREEN TITLE
-                      Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Progetti',
-                          style: TextStyle(
-                            color: Colors.black87,
-                            fontSize: dimBackButton,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 50)
-                    ],
+        curve: Curves.fastOutSlowIn,
+
+        //CHILD
+        // child: Container(
+        //   height: deviceHeight,
+        //   padding: EdgeInsets.all(25),
+        //   decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.circular(35),
+        //     color: Theme.of(context).backgroundColor,
+        //     boxShadow: [
+        //       BoxShadow(
+        //         color: Colors.black12,
+        //         blurRadius: 15,
+        //         spreadRadius: 9,
+        //         offset: const Offset(-10, 10),
+        //       )
+        //     ],
+        //   ),
+        child: Column(
+          children: [
+            //APPBAR
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  //ICON BUTTON
+                  Center(
+                    child: isDrawerOpen
+                        //DRAWER/BACK BUTTON
+                        ? IconButton(
+                            icon: Icon(Icons.arrow_back_ios),
+                            iconSize: dimBackButton,
+                            onPressed: () {
+                              setState(() {
+                                xOffset = 0;
+                                yOffset = 0;
+                                scaleFactor = 1;
+                                borderRadius = BorderRadius.circular(0);
+                                isDrawerOpen = false;
+                              });
+                            },
+                          )
+                        //BUTTON APERTURA DRAWER
+                        : IconButton(
+                            icon: Icon(Icons.menu),
+                            iconSize: dimBackButton,
+                            onPressed: () {
+                              setState(() {
+                                xOffset = deviceWidth / 2 + 25;
+                                yOffset =
+                                    (deviceHeight - deviceHeight * 0.8) / 2;
+                                //yOffset per la metà dello schermo dopo 0.6 scale
+                                scaleFactor = 0.8;
+                                borderRadius = BorderRadius.circular(35);
+                                isDrawerOpen = true;
+                              });
+                            }),
                   ),
-                ),
-                //INTERFACCIA...
-                Stack(
-                  children: [
-                    FloatingActionButton(
-                      child: Icon(
+
+                  //SCREEN TITLE
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Progetti',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: dimBackButton,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 50)
+                ],
+              ),
+            ),
+
+            //INTERFACCIA..
+            Expanded(
+              child: Stack(
+                children: [
+                  //BUTTON CREA PROGETTO
+                  Positioned(
+                    bottom: 25,
+                    right: 0,
+                    child: FloatingActionButton.extended(
+                      icon: Icon(
                         Icons.add,
                         color: Colors.grey[100],
                       ),
+                      label: Text('Crea Progetto'),
                       onPressed: () {},
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  //ProjectsList(),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
+        // ),
       ),
     );
   }

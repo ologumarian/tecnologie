@@ -17,7 +17,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
     return SafeArea(
       child: Container(
         color: theme ? Theme.of(context).bottomAppBarColor : Colors.white,
-        padding: EdgeInsets.only(left: 15, top: 34, bottom: 24, right: 200),
+        padding: EdgeInsets.only(left: 15, top: 44, bottom: 24, right: 200),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,15 +25,15 @@ class _DrawerScreenState extends State<DrawerScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // CircleAvatar(
-                //   radius: 30,
-                //   backgroundColor: Colors.blueGrey[100],
-                // ),
+                CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.blueGrey[100],
+                ),
                 Container(
-                  margin: EdgeInsets.only(top: 20, bottom: 50),
+                  margin: EdgeInsets.only(top: 16, bottom: 50),
                   child: Column(
                     children: [
-                      SizedBox(height: 35),
+                      //SizedBox(height: 25),
                       Text(
                         'Marian Ologu',
                         softWrap: true,
