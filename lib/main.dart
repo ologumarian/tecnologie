@@ -1,3 +1,4 @@
+import 'package:documentive/screens/project_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.red[800],
         bottomAppBarColor: Colors.red[800], //per drawer
         textTheme: TextTheme(
-          bodyText1: TextStyle(color: Colors.grey[100]), 
+          bodyText1: TextStyle(color: Colors.grey[100]),
         ),
         backgroundColor: Colors.white,
       ),
@@ -46,6 +47,9 @@ class MyApp extends StatelessWidget {
           return AuthScreen(); //Se il Token non esiste o non è valido viene caricato lo AuthScreen
         },
       ),
+      routes: {
+        '/project-details': (context) => ProjectScreen(),
+      },
     );
   }
 }
