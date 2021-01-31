@@ -21,7 +21,7 @@ class Project {
 final DUMMY_PROJECTS = [
   Project(
     id: 'p1',
-    name: 'OLO Studios',
+    name: 'OLO Studios Spotted',
     owner: 'Marian',
     description: 'App social dedicata ad un target giovanile',
     date: DateTime.now(),
