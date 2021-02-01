@@ -136,8 +136,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   //BUTTON CREA PROGETTO
                   Positioned(
-                    bottom: 25,
-                    right: 25,
+                    bottom: 20,
+                    right: 20,
                     child: FloatingActionButton.extended(
                       icon: Icon(
                         Icons.add,

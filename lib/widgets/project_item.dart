@@ -45,6 +45,16 @@ class ProjectItem extends StatelessWidget {
                       'imageLink': imageLink,
                     },
                   ),
+                  transitionsBuilder: (BuildContext context,
+                      Animation<double> animation,
+                      Animation<double> secondaryAnimation,
+                      Widget child) {
+                    return FadeTransition(
+                      opacity:
+                          animation, // CurvedAnimation(parent: animation, curve: Curves.elasticInOut),
+                      child: child,
+                    );
+                  },
                 ),
               );
             },
@@ -154,7 +164,7 @@ class ProjectItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Hero(
-                  tag: id, //tag per la Hero Animation
+                  tag: id + imageLink, //tag per la Hero Animation
                   child: FadeInImage(
                     placeholder:
                         AssetImage('assets/images/placeholder_documentive.png'),
