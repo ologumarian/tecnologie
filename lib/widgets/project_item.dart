@@ -9,6 +9,9 @@ class ProjectItem extends StatelessWidget {
   final String description;
   final DateTime date;
   final String imageLink;
+  final bool isDrawerOpen;
+
+  final Function closeDrawer;
 
   ProjectItem({
     @required this.id,
@@ -17,30 +20,34 @@ class ProjectItem extends StatelessWidget {
     this.description,
     this.date,
     this.imageLink,
+    @required this.isDrawerOpen,
+    @required this.closeDrawer,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          PageRouteBuilder(
-            transitionDuration: Duration(milliseconds: 500),
-            pageBuilder: (context, _, __) => ProjectScreen(),
-            settings: RouteSettings(
-              arguments: {
-                'id': id,
-                'name': name,
-                'owner': owner,
-                'description': description,
-                'date': date,
-                'imageLink': imageLink,
-              },
-            ),
-          ),
-        );
-      },
+      onTap: isDrawerOpen
+          ? closeDrawer //Se il drawer è aperto imposto la funzione per chiuderlo
+          : () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  transitionDuration: Duration(milliseconds: 500),
+                  pageBuilder: (context, _, __) => ProjectScreen(),
+                  settings: RouteSettings(
+                    arguments: {
+                      'id': id,
+                      'name': name,
+                      'owner': owner,
+                      'description': description,
+                      'date': date,
+                      'imageLink': imageLink,
+                    },
+                  ),
+                ),
+              );
+            },
       child: Stack(
         children: [
           //CARD SOTTOSTANTE

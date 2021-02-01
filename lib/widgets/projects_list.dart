@@ -5,10 +5,13 @@ import '../models/project.dart';
 import '../widgets/project_item.dart';
 
 class ProjectsList extends StatefulWidget {
-  var disableScroll =
-      false; //Se true significa che il drawer è aperto quindi disabilito le gesture sulla lista
+  final disableScroll; //Se true significa che il drawer è aperto quindi disabilito le gesture sulla lista
+  final Function closeDrawer;
 
-  ProjectsList(this.disableScroll);
+  ProjectsList(
+    this.disableScroll,
+    this.closeDrawer,
+  );
 
   @override
   _ProjectsListState createState() => _ProjectsListState();
@@ -29,6 +32,8 @@ class _ProjectsListState extends State<ProjectsList> {
         description: DUMMY_PROJECTS[index].description,
         date: DUMMY_PROJECTS[index].date,
         imageLink: DUMMY_PROJECTS[index].imageLink,
+        isDrawerOpen: widget.disableScroll,
+        closeDrawer: widget.closeDrawer,
       ),
     );
   }

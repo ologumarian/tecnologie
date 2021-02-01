@@ -19,6 +19,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool isDrawerOpen = false;
 
+  Function closeDrawer() {
+    setState(() {
+      xOffset = 0;
+      yOffset = 0;
+      scaleFactor = 1;
+      borderRadius = BorderRadius.circular(0);
+      isDrawerOpen = false;
+    });
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]); //nasconde la status bar
@@ -29,16 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return GestureDetector(
       onTap: isDrawerOpen
-          ? () {
-              //chiusura drawer
-              setState(() {
-                xOffset = 0;
-                yOffset = 0;
-                scaleFactor = 1;
-                borderRadius = BorderRadius.circular(0);
-                isDrawerOpen = false;
-              });
-            }
+          ? closeDrawer //chiusura drawer
           : () {},
       child: AnimatedContainer(
         //ANIMATION
@@ -128,7 +130,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   //LISTA PROGETTI
                   ProjectsList(
-                      isDrawerOpen), //Gli passo la flag per bloccare le gesture quando il drawer è aperto
+                    isDrawerOpen,
+                    closeDrawer,
+                  ), //Gli passo la flag per bloccare le gesture quando il drawer è aperto
 
                   //BUTTON CREA PROGETTO
                   Positioned(

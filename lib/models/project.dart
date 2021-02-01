@@ -18,6 +18,7 @@ class Project {
   });
 }
 
+// ignore: non_constant_identifier_names
 final DUMMY_PROJECTS = [
   Project(
     id: 'p1',
