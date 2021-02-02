@@ -20,35 +20,60 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  // Create the initialization Future outside of `build`:
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.dark, // status bar color
-    ));
-    SystemChrome.setEnabledSystemUIOverlays([]); //nasconde la status bar
+    // status bar color
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark));
+    //nasconde la status bar
+    SystemChrome.setEnabledSystemUIOverlays([]);
 
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-        accentColor: Colors.red[800],
-        bottomAppBarColor: Colors.red[800], //per drawer
-        textTheme: TextTheme(
-          bodyText1: TextStyle(color: Colors.grey[100]),
-        ),
-        backgroundColor: Colors.white,
-      ),
-      home: StreamBuilder(
-        stream: FirebaseAuth.instance.idTokenChanges(), //Listener sul Token
-        builder: (ctx, userSnapshot) {
-          if (userSnapshot.hasData) {
-            return HomePage(); //Se il Token è valido viene visualizzata la HomePage
-          }
-          return AuthScreen(); //Se il Token non esiste o non è valido viene caricato lo AuthScreen
-        },
-      ),
-      routes: {
-        '/project-details': (context) => ProjectScreen(),
+    return FutureBuilder(
+      // Initialize FlutterFire:
+      future: _initialization,
+      builder: (context, snapshot) {
+        // Check for errors
+        if (snapshot.hasError) {
+          return Center(
+            child: Text(
+                'Errore nel caricamneto dell\'app. Verifica la connessione a internet e riprova.'),
+          );
+        }
+
+        // Once complete, show your application
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MaterialApp(
+            theme: ThemeData(
+              primarySwatch: Colors.blueGrey,
+              accentColor: Colors.red[800],
+              bottomAppBarColor: Colors.red[800], //per drawer
+              textTheme: TextTheme(
+                bodyText1: TextStyle(color: Colors.grey[100]),
+              ),
+              backgroundColor: Colors.white,
+            ),
+            home: StreamBuilder(
+              stream:
+                  FirebaseAuth.instance.idTokenChanges(), //Listener sul Token
+              builder: (ctx, userSnapshot) {
+                if (userSnapshot.hasData) {
+                  return HomePage(); //Se il Token è valido viene visualizzata la HomePage
+                }
+                return AuthScreen(); //Se il Token non esiste o non è valido viene caricato lo AuthScreen
+              },
+            ),
+            routes: {
+              '/project-details': (context) => ProjectScreen(),
+            },
+          );
+        }
+        // Otherwise, show something whilst waiting for initialization to complete
+        return Center(
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }

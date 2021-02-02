@@ -1,6 +1,13 @@
-import 'package:file_picker/file_picker.dart';
+// import 'dart:html' as html;
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+// import 'package:http/http.dart' as http;
 
 class ProjectScreen extends StatefulWidget {
   @override
@@ -15,9 +22,9 @@ class _ProjectScreenState extends State<ProjectScreen> {
 
     final id = routeArgs['id'];
     final name = routeArgs['name'];
-    final owner = routeArgs['owner'];
+    // final owner = routeArgs['owner'];
     final description = routeArgs['description'];
-    final date = routeArgs['date'];
+    // final date = routeArgs['date'];
     final imageLink = routeArgs['imageLink'];
 
     return Scaffold(
@@ -26,11 +33,9 @@ class _ProjectScreenState extends State<ProjectScreen> {
           return <Widget>[
             SliverAppBar(
               expandedHeight: 250,
-              //leadingWidth: MediaQuery.of(context).size.width,
               floating: true,
               pinned: true,
               backgroundColor: Colors.black87,
-              // backgroundColor: Theme.of(context).bottomAppBarColor,
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
                 title: Text(name),
@@ -67,43 +72,54 @@ class _ProjectScreenState extends State<ProjectScreen> {
           child: Text(description),
         ),
       ),
-      floatingActionButton: AddFile(),
+      //passo l'id del progetto che costituisce il path della collection del rispettivo progetto
+      floatingActionButton: AddFile(
+        idCollection: id,
+      ),
     );
   }
 }
 
 class AddFile extends StatefulWidget {
+  final String idCollection;
+
+  AddFile({@required this.idCollection});
+
   @override
   _AddFileState createState() => _AddFileState();
 }
 
 class _AddFileState extends State<AddFile> {
-  FilePickerResult result;
-  String path;
-  Map<String, String> paths;
-  String extensions;
-  FileType pickType;
-  bool multiPick = false;
-  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  FilePickerResult _result;
+  String _path;
+  Map<String, String> _paths;
+  String _extensions;
+  FileType _pickType;
+  bool _multiPick = false;
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   // List<StorageEvent> task = <StorageEvent>[];
 
+  //FX per apertura file
   openFileExplorer() async {
     try {
-      result = await FilePicker.platform.pickFiles(
+      _result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['doc', 'pdf', 'docx'],
       );
 
-      if (result != null) {
-        PlatformFile file = result.files.first;
+      if (_result != null) {
+        _path = _result.paths.first;
+        PlatformFile file = _result.files.first;
 
         print("Nome File: " + file.name);
         print("Bytes: " + file.bytes.toString());
         print("Dimensione: " + file.size.toString());
         print("Estensione: " + file.extension);
         print("Percorso" + file.path);
+        print("PATH: " + _path);
+        upLoadToFirebase();
       } else {
-        // User canceled the picker
+        // L'utente annulla l'operazione
       }
     } on PlatformException catch (e) {
       print('Unsopported operation' + e.toString());
@@ -111,6 +127,30 @@ class _AddFileState extends State<AddFile> {
     if (!mounted) {
       return;
     }
+  }
+
+  upLoadToFirebase() {
+    String filePath = _path;
+    String fileName = _path.split('/').last;
+    upload(fileName, filePath);
+  }
+
+  Future<void> upload(fileName, filePath) async {
+    _extensions = fileName.toString().split('.').last;
+    String refPath =
+        widget.idCollection + '/' + fileName; //percorso del file nel db
+
+    File file = File(filePath); //Fetch file dalla memoria del telefono
+    //Importante! Usare prefisso as sulla libreria dart.html
+
+    try {
+      await firebase_storage.FirebaseStorage.instance
+          .ref(refPath)
+          .putFile(file);
+    } on FirebaseException catch (e) {
+      SnackBar(content: Text('Errore nel caricamento'));
+    }
+    print("Caricamento di $fileName completato");
   }
 
   @override
