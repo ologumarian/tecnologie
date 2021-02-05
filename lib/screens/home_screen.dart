@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           //DROP SHADOW PER SCREEN ON DRAWER OPENING
           boxShadow: [
             BoxShadow(
-              color: Colors.black12,
+              color: Colors.black26,
               blurRadius: 15,
               spreadRadius: 5,
               offset: const Offset(-10, 10),

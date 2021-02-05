@@ -1,13 +1,9 @@
-// import 'dart:html' as html;
-import 'dart:io';
+import 'package:intl/intl.dart'; //Per la classe DateFormat
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import 'package:file_picker/file_picker.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-// import 'package:http/http.dart' as http;
+import '../widgets/documents_list.dart';
+import '../widgets/add_file.dart';
 
 class ProjectScreen extends StatefulWidget {
   @override
@@ -22,9 +18,9 @@ class _ProjectScreenState extends State<ProjectScreen> {
 
     final id = routeArgs['id'];
     final name = routeArgs['name'];
-    // final owner = routeArgs['owner'];
+    final owner = routeArgs['owner'];
     final description = routeArgs['description'];
-    // final date = routeArgs['date'];
+    final date = routeArgs['date'];
     final imageLink = routeArgs['imageLink'];
 
     return Scaffold(
@@ -32,34 +28,99 @@ class _ProjectScreenState extends State<ProjectScreen> {
         headerSliverBuilder: (context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              expandedHeight: 250,
+              expandedHeight: 280,
               floating: true,
               pinned: true,
+              //NOME PROGETTO
+              title: Text(
+                name,
+                style: TextStyle(fontSize: 24),
+              ),
+              centerTitle: true,
               backgroundColor: Colors.black87,
               flexibleSpace: FlexibleSpaceBar(
-                centerTitle: true,
-                title: Text(name),
+                collapseMode: CollapseMode.parallax,
                 background: Stack(
                   fit: StackFit
                       .expand, // importante per il BoxFit.cover delle immagini!!!
                   children: [
+                    //IMMAGINE
                     Hero(
                         tag: id + imageLink,
                         child: Image.network(
                           imageLink,
                           fit: BoxFit.cover,
                         )),
+                    //SFUMATURA IMMAGINE
                     Container(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
+                          stops: [0.3, 1],
                           colors: [
                             // Colors.red[900].withAlpha(150),
-                            Colors.transparent,
-                            Colors.black.withAlpha(200),
+                            Colors.black.withAlpha(220),
+                            Colors.black.withAlpha(75),
                           ],
                         ),
+                      ),
+                    ),
+                    //BODY APPBAR
+                    Container(
+                      padding: EdgeInsets.only(
+                        left: 25,
+                        right: 25,
+                        bottom: 20,
+                        top: 80,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //DESCRIZIONE
+                          Text(
+                            description,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
+                            maxLines: 3,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                          //DETTAGLI
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              //DATA CREAZIONE PROGETTO
+                              Row(children: [
+                                Icon(
+                                  Icons.calendar_today_outlined,
+                                  size: 15,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(width: 5),
+                                Text(
+                                  DateFormat('HH:mm - dd MMM yyyy')
+                                      .format(date),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ]),
+                              //PROPRIETARIO
+                              Chip(
+                                label: Text(owner),
+                                avatar: Icon(
+                                  Icons.person_outline,
+                                  size: 20,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
                       ),
                     ),
                   ],
@@ -68,96 +129,17 @@ class _ProjectScreenState extends State<ProjectScreen> {
             ),
           ];
         },
+
+        //LISTA DOCUMENTI
         body: Center(
           child: Text(description),
         ),
+        // body: DocumentsList(),
       ),
       //passo l'id del progetto che costituisce il path della collection del rispettivo progetto
       floatingActionButton: AddFile(
         idCollection: id,
       ),
-    );
-  }
-}
-
-class AddFile extends StatefulWidget {
-  final String idCollection;
-
-  AddFile({@required this.idCollection});
-
-  @override
-  _AddFileState createState() => _AddFileState();
-}
-
-class _AddFileState extends State<AddFile> {
-  FilePickerResult _result;
-  String _path;
-  Map<String, String> _paths;
-  String _extensions;
-  FileType _pickType;
-  bool _multiPick = false;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  // List<StorageEvent> task = <StorageEvent>[];
-
-  //FX per apertura file
-  openFileExplorer() async {
-    try {
-      _result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['doc', 'pdf', 'docx'],
-      );
-
-      if (_result != null) {
-        _path = _result.paths.first;
-        PlatformFile file = _result.files.first;
-
-        print("Nome File: " + file.name);
-        print("Bytes: " + file.bytes.toString());
-        print("Dimensione: " + file.size.toString());
-        print("Estensione: " + file.extension);
-        print("Percorso" + file.path);
-        print("PATH: " + _path);
-        upLoadToFirebase();
-      } else {
-        // L'utente annulla l'operazione
-      }
-    } on PlatformException catch (e) {
-      print('Unsopported operation' + e.toString());
-    }
-    if (!mounted) {
-      return;
-    }
-  }
-
-  upLoadToFirebase() {
-    String filePath = _path;
-    String fileName = _path.split('/').last;
-    upload(fileName, filePath);
-  }
-
-  Future<void> upload(fileName, filePath) async {
-    _extensions = fileName.toString().split('.').last;
-    String refPath =
-        widget.idCollection + '/' + fileName; //percorso del file nel db
-
-    File file = File(filePath); //Fetch file dalla memoria del telefono
-    //Importante! Usare prefisso as sulla libreria dart.html
-
-    try {
-      await firebase_storage.FirebaseStorage.instance
-          .ref(refPath)
-          .putFile(file);
-    } on FirebaseException catch (e) {
-      SnackBar(content: Text('Errore nel caricamento'));
-    }
-    print("Caricamento di $fileName completato");
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      child: Icon(Icons.add),
-      onPressed: () => openFileExplorer(),
     );
   }
 }
