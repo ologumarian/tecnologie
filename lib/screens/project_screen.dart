@@ -1,9 +1,12 @@
+import 'package:documentive/providers/documents.dart';
 import 'package:intl/intl.dart'; //Per la classe DateFormat
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../helpers/file_picker.dart';
 
 import '../widgets/documents_list.dart';
-import '../widgets/add_file.dart';
 
 class ProjectScreen extends StatefulWidget {
   @override
@@ -15,13 +18,16 @@ class _ProjectScreenState extends State<ProjectScreen> {
   Widget build(BuildContext context) {
     final routeArgs =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-
     final id = routeArgs['id'];
     final name = routeArgs['name'];
     final owner = routeArgs['owner'];
     final description = routeArgs['description'];
     final date = routeArgs['date'];
     final imageLink = routeArgs['imageLink'];
+
+    //bind del provider dei Documenti
+    final documents = Provider.of<Documents>(context);
+    documents.setCollection(id);
 
     return Scaffold(
       body: NestedScrollView(
@@ -119,7 +125,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
                                 ),
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -131,14 +137,23 @@ class _ProjectScreenState extends State<ProjectScreen> {
         },
 
         //LISTA DOCUMENTI
-        body: Center(
-          child: Text(description),
-        ),
-        // body: DocumentsList(),
+        body: DocumentsList(),
       ),
-      //passo l'id del progetto che costituisce il path della collection del rispettivo progetto
-      floatingActionButton: AddFile(
-        idCollection: id,
+
+      //BUTTON AGGIUNGI FILE (Collegato al provider per operazioni di aggiunta documenti)
+      floatingActionButton: Consumer<Documents>(
+        builder: (ctx, documents, child) => FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () async {
+            List<String> paths = [];
+            try {
+              paths = await FilePickerHelper.openFileExplorer();
+            } catch (e) {
+              print(e);
+            }
+            documents.uploadToFirebase(paths);
+          },
+        ),
       ),
     );
   }
