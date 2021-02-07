@@ -137,11 +137,39 @@ class _ProjectScreenState extends State<ProjectScreen> {
         },
 
         //LISTA DOCUMENTI
-        // body: DocumentsList(),
-        body: Center(
-          child: Text('Documenti'),
-        ),
+        body: documents.items.length > 0
+            ? Consumer<Documents>(
+                builder: (ctx, documents, _) => DocumentsList(),
+              )
+            : Center(
+                child: Container(
+                  height: 200,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        'Nessun documento presente.\nProva ad aggiungerne qualcuno ;)',
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: true,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                      Center(
+                        child: Container(
+                          height: 100,
+                          child: Image.asset(
+                              'assets/images/large_documentive.png'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
       ),
+      // body: DocumentsList()),
 
       //BUTTON AGGIUNGI FILE (Collegato al provider per operazioni di aggiunta documenti)
       floatingActionButton: Consumer<Documents>(

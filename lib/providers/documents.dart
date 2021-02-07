@@ -16,9 +16,11 @@ class Documents with ChangeNotifier {
   }
 
   void setCollection(String collection) {
-    _idCollection = collection;
-    _fetchAndSetDocuments();
-    // notifyListeners();
+    if (collection != _idCollection) {
+      _items.clear();
+      _idCollection = collection;
+      _fetchAndSetDocuments();
+    }
   }
 
   Future<void> _fetchAndSetDocuments() async {
@@ -29,8 +31,9 @@ class Documents with ChangeNotifier {
 
     result.items.forEach((firebase_storage.Reference ref) {
       print('FILE TROVATO: $ref');
-      // _items.add(Document(id: ref.name, name: ref.name));
+      _items.add(Document(id: ref.name, name: ref.name));
     });
+    notifyListeners();
   }
 
   void uploadToFirebase(List<String> paths) {
@@ -39,6 +42,7 @@ class Documents with ChangeNotifier {
       String fileName = paths[i].split('/').last;
       _uploadTask(fileName, filePath);
     }
+    _fetchAndSetDocuments();
   }
 
   Future<void> _uploadTask(fileName, filePath) async {
