@@ -4,10 +4,12 @@ class Document {
   String id;
   String name;
   String idOwner;
+  bool loading;
 
   Document({
     @required this.id,
     @required this.name,
-    this.idOwner,
+    this.idOwner = 'user',
+    this.loading = false,
   });
 }

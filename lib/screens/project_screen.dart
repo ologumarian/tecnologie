@@ -137,7 +137,10 @@ class _ProjectScreenState extends State<ProjectScreen> {
         },
 
         //LISTA DOCUMENTI
-        body: DocumentsList(),
+        // body: DocumentsList(),
+        body: Center(
+          child: Text('Documenti'),
+        ),
       ),
 
       //BUTTON AGGIUNGI FILE (Collegato al provider per operazioni di aggiunta documenti)
