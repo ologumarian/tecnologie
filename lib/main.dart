@@ -1,4 +1,5 @@
 import 'package:documentive/providers/documents.dart';
+import 'package:documentive/providers/projects.dart';
 import 'package:documentive/screens/project_screen.dart';
 import 'package:documentive/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:provider/provider.dart';
 import './screens/drawer_screen.dart';
 import './screens/home_screen.dart';
 import './screens/auth_screen.dart';
+import './screens/new_project_screen.dart';
 //import './screens/splash_screen.dart';
 
 //import './screens/auth_screen.dart';
@@ -38,6 +40,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (ctx) => Documents(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Projects(),
         )
       ],
       child: FutureBuilder(
@@ -79,6 +84,7 @@ class MyApp extends StatelessWidget {
               ),
               routes: {
                 '/project-details': (context) => ProjectScreen(),
+                '/new-project': (context) => NewProjectScreen(),
               },
             );
           }

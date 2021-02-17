@@ -1,3 +1,4 @@
+import 'package:documentive/screens/new_project_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -146,9 +147,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       label: Text('Crea Progetto'),
                       elevation: 9,
                       onPressed: isDrawerOpen
-                          ? () {} //Se il
+                          ? () {}
                           : () {
-                              //Implementare azione CREA PROGETTO
+                              Navigator.push(
+                                context,
+                                PageRouteBuilder(
+                                  transitionDuration:
+                                      Duration(milliseconds: 500),
+                                  pageBuilder: (context, _, __) =>
+                                      NewProjectScreen(),
+                                ),
+                              );
                             },
                     ),
                   ),

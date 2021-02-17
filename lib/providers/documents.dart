@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '../models/document.dart';
@@ -34,6 +32,7 @@ class Documents with ChangeNotifier {
       _items.add(Document(id: ref.name, name: ref.name));
     });
     notifyListeners();
+    print('_fetchAndSetDocuments has triggered NOTIFY LISTENERS');
   }
 
   void uploadToFirebase(List<String> paths) {
@@ -82,10 +81,12 @@ class Documents with ChangeNotifier {
       },
       onDone: () {
         print("FIREBASE - STORAGE: Caricamento di $fileName completato");
+        _fetchAndSetDocuments();
       },
     );
 
-    notifyListeners();
+    // notifyListeners();
+
     // // Cancel the upload.
     // bool cancelled = await task.cancel();
     // print('cancelled? $cancelled');
