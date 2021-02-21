@@ -25,6 +25,7 @@ class _AuthScreenState extends State<AuthScreen> {
     BuildContext ctx,
   ) async {
     UserCredential authResult; //Era il vecchio AuthResult
+
     try {
       setState(() {
         _isLoading = true; //triggera la rotellina di caricamento
@@ -36,6 +37,7 @@ class _AuthScreenState extends State<AuthScreen> {
           email: email,
           password: password,
         );
+        //salvataggio dello username nel provider
         print('LOG IN CON EMAIL E PASSWORD');
       }
 
@@ -45,7 +47,6 @@ class _AuthScreenState extends State<AuthScreen> {
           email: email,
           password: password,
         );
-
         await FirebaseFirestore.instance
             .collection('users')
             .doc(authResult.user.uid)
@@ -53,7 +54,6 @@ class _AuthScreenState extends State<AuthScreen> {
           'username': username,
           'email': email,
         });
-
         print('REGISTRAZIONE CON EMAIL E PASSWORD');
       }
     } on PlatformException catch (err) {

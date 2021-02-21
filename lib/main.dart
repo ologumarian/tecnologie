@@ -1,3 +1,4 @@
+import 'package:documentive/providers/auth_provider.dart';
 import 'package:documentive/providers/documents.dart';
 import 'package:documentive/providers/projects.dart';
 import 'package:documentive/screens/project_screen.dart';
@@ -39,11 +40,14 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => Documents(),
+          create: (_) => Documents(),
         ),
         ChangeNotifierProvider(
-          create: (ctx) => Projects(),
-        )
+          create: (_) => Projects(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AuthProvider(),
+        ),
       ],
       child: FutureBuilder(
         // Initialize FlutterFire:

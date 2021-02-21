@@ -117,6 +117,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    //NAME
                     TextFormField(
                       key: ValueKey('name'),
                       keyboardType: TextInputType.text,
@@ -136,6 +137,8 @@ class _NewProjectFormState extends State<NewProjectForm> {
                       },
                       onSaved: (value) {},
                     ),
+
+                    //IMAGE LINK
                     TextFormField(
                       key: ValueKey('imageLink'),
                       keyboardType: TextInputType.url,
@@ -166,6 +169,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                       },
                       onSaved: (value) {},
                     ),
+                    //DESCRIPTION
                     TextFormField(
                       key: ValueKey('description'),
                       keyboardType: TextInputType.multiline,
@@ -186,15 +190,13 @@ class _NewProjectFormState extends State<NewProjectForm> {
                     SizedBox(
                       height: 25,
                     ),
+
+                    //IMAGE PREVIEW
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: 250,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(
-                          color: Colors.grey[200],
-                          width: 2,
-                        ),
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(

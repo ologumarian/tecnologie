@@ -60,11 +60,14 @@ class _AuthFormState extends State<AuthForm> {
             key: _formKey,
             child: Column(
               children: [
+                //LOGO
                 Container(
                   child: Image.asset('assets/images/large_documentive.png'),
                   height: 100,
                 ),
                 SizedBox(height: 25),
+
+                //EMAIL
                 TextFormField(
                   key: ValueKey('email'),
                   keyboardType: TextInputType.emailAddress,
@@ -81,6 +84,8 @@ class _AuthFormState extends State<AuthForm> {
                     _userEmail = value;
                   },
                 ),
+
+                //NOME (REGISTRAZIONE)
                 if (!_isLogin)
                   TextFormField(
                     key: ValueKey('nome'),
@@ -98,6 +103,8 @@ class _AuthFormState extends State<AuthForm> {
                       _userName = value;
                     },
                   ),
+
+                //PASSWORD
                 TextFormField(
                   key: ValueKey('password'),
                   decoration: InputDecoration(labelText: "Password"),
@@ -113,9 +120,11 @@ class _AuthFormState extends State<AuthForm> {
                   },
                 ),
                 SizedBox(height: 15),
+
                 //Se c'è il caricamento viene mostrata la rotellina
                 if (widget.isLoading) CircularProgressIndicator(),
-                //Non mostro il pulsante se c'è un caricamento
+
+                //BOTTONE
                 if (!widget.isLoading)
                   ElevatedButton(
                     child: Text(_isLogin ? 'Login' : 'Registrati'),

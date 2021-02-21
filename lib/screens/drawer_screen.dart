@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:documentive/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 import '../config/configuration.dart';
 
@@ -35,23 +38,27 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   backgroundColor: Colors.blueGrey[100],
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 16, bottom: 50),
-                  child: Column(
-                    children: [
-                      //SizedBox(height: 25),
-                      Text(
-                        'Marian Ologu',
-                        softWrap: true,
-                        //overflow: TextOverflow.fade,
-                        style: TextStyle(
-                          color: theme ? Colors.grey[100] : Colors.black87,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                    margin: EdgeInsets.only(top: 16, bottom: 50),
+                    child: Consumer<AuthProvider>(
+                      builder: (ctx, authData, child) {
+                        print('BUILDER FX');
+                        if (authData.username == null) {
+                          print('BUILDER No Data');
+                          return Text('data');
+                        } else {
+                          print('BUILDER Text');
+                          return Text(
+                            authData.username,
+                            softWrap: true,
+                            style: TextStyle(
+                              color: theme ? Colors.grey[100] : Colors.black87,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        }
+                      },
+                    )),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: drawerItems
