@@ -1,7 +1,11 @@
-import 'package:documentive/screens/new_project_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/auth_provider.dart';
+
+import '../screens/new_project_screen.dart';
 
 import '../widgets/projects_list.dart';
 
@@ -83,6 +87,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             iconSize: dimBackButton,
                             onPressed: () {
                               setState(() {
+                                //SOLUZIONE PROVVISORIA PER TRIGGERARE IL METODO QUANDO IL DRAWER VIENE REBUILDATO
+                                final authData = Provider.of<AuthProvider>(
+                                    context,
+                                    listen: false);
+                                if (authData.username == null) {
+                                  authData.fetchAndSetUsername();
+                                }
                                 xOffset = 0;
                                 yOffset = 0;
                                 scaleFactor = 1;

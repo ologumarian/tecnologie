@@ -1,8 +1,10 @@
+import 'package:documentive/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/auth/auth_form.dart';
 
@@ -30,17 +32,26 @@ class _AuthScreenState extends State<AuthScreen> {
       setState(() {
         _isLoading = true; //triggera la rotellina di caricamento
       });
-
       // LOG IN UTENTE
       if (isLogin) {
-        authResult = await _auth.signInWithEmailAndPassword(
+        authResult = await _auth
+            .signInWithEmailAndPassword(
           email: email,
           password: password,
+        )
+            .then(
+          (value) {
+            Provider.of<AuthProvider>(context, listen: false)
+                .fetchAndSetUsernameOnLogin(value.user.uid);
+            print('fetchAndSetUsernameOnLogin() CALL FROM AUTH_SCREEN');
+            return;
+          },
         );
         //salvataggio dello username nel provider
         print('LOG IN CON EMAIL E PASSWORD');
+        // print('fetchAndSetUsername() CALL FROM AUTH_SCREEN');
+        // Provider.of<AuthProvider>(context, liste: false).fetchAndSetUsername();
       }
-
       // REGISTRAZIONE UTENTE
       else {
         authResult = await _auth.createUserWithEmailAndPassword(
