@@ -46,17 +46,34 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         valueListenable:
                             ValueNotifier<String>(authData.username),
                         builder: (context, String value, _) => Container(
-                            margin: EdgeInsets.only(top: 16, bottom: 50),
-                            child: Text(
-                              value == null ? 'Username' : value,
-                              key: UniqueKey(),
-                              softWrap: true,
-                              style: TextStyle(
-                                color:
-                                    theme ? Colors.grey[100] : Colors.black87,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            margin: EdgeInsets.only(top: 16, bottom: 40),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Ciao,',
+                                  style: TextStyle(
+                                    color: theme
+                                        ? Colors.grey[100]
+                                        : Colors.black87,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  value == null ? 'Username' : value,
+                                  key: UniqueKey(),
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    color: theme
+                                        ? Colors.grey[100]
+                                        : Colors.black87,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             )),
                       ),
                       Column(
