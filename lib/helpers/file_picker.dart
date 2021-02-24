@@ -5,6 +5,7 @@ class FilePickerHelper {
   static List<String> _paths = [];
   static FilePickerResult _result;
 
+  // ignore: missing_return
   static Future<List<String>> openFileExplorer() async {
     try {
       _result = await FilePicker.platform.pickFiles(

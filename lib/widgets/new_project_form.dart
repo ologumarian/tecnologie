@@ -64,11 +64,13 @@ class _NewProjectFormState extends State<NewProjectForm> {
       _isLoading = true;
     });
     try {
+      //ATTENZIONE A METTER LISTEN:FALSE PER EVITARE CALLBACK TIPO LISTENER
       await Provider.of<Projects>(context, listen: false).addProject(
         name: name,
         desc: description,
         imageLink: imageLink,
       );
+      print('CREAZIONE PROGETTO COMPLETATA');
     } catch (error) {
       //ritorna un Future
       await showDialog<Null>(
@@ -95,6 +97,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
           ],
         ),
       );
+      print(error);
     }
 
     setState(() {
@@ -135,7 +138,9 @@ class _NewProjectFormState extends State<NewProjectForm> {
                         }
                         return null;
                       },
-                      onSaved: (value) {},
+                      onSaved: (value) {
+                        //TODO: salvare variabile
+                      },
                     ),
 
                     //IMAGE LINK
@@ -167,7 +172,9 @@ class _NewProjectFormState extends State<NewProjectForm> {
                         }
                         return null;
                       },
-                      onSaved: (value) {},
+                      onSaved: (value) {
+                        //TODO: salvare variabile
+                      },
                     ),
                     //DESCRIPTION
                     TextFormField(
@@ -185,7 +192,9 @@ class _NewProjectFormState extends State<NewProjectForm> {
                         }
                         return null;
                       },
-                      onSaved: (value) {},
+                      onSaved: (value) {
+                        //TODO: salvare variabile
+                      },
                     ),
                     SizedBox(
                       height: 25,

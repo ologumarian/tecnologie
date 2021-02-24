@@ -17,6 +17,10 @@ class AuthProvider with ChangeNotifier {
     return _username;
   }
 
+  String get uid {
+    return uid;
+  }
+
   Future<void> fetchAndSetUsername() async {
     //fetch da Firebase Auth dell'email
     await FirebaseAuth.instance.authStateChanges().listen((User user) {

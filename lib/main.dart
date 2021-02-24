@@ -1,3 +1,4 @@
+import 'package:documentive/models/project.dart';
 import 'package:documentive/providers/auth_provider.dart';
 import 'package:documentive/providers/documents.dart';
 import 'package:documentive/providers/projects.dart';
@@ -43,10 +44,20 @@ class MyApp extends StatelessWidget {
           create: (_) => Documents(),
         ),
         ChangeNotifierProvider(
-          create: (_) => Projects(),
+          create: (_) => Projects(list: [], user: ''),
         ),
         ChangeNotifierProvider(
           create: (_) => AuthProvider(),
+        ),
+
+        //Il proxy provider effettua la DEPENDENCY INJECTION
+        ChangeNotifierProxyProvider<AuthProvider, Projects>(
+          //importante passare il contesto e inizializzare con create
+          create: (ctx) => Projects(list: [], user: ''),
+          update: (ctx, auth, previousProjects) => Projects(
+            list: previousProjects.items.isEmpty ? [] : previousProjects.items,
+            user: auth.username,
+          ),
         ),
       ],
       child: FutureBuilder(
