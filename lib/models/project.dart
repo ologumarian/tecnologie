@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Project {
   final String id;
   final String name;
@@ -9,7 +7,7 @@ class Project {
   final String imageLink;
 
   Project({
-    @required this.id,
+    this.id,
     this.name,
     this.owner,
     this.description,

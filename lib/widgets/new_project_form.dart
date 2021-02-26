@@ -124,7 +124,23 @@ class _NewProjectFormState extends State<NewProjectForm> {
                     TextFormField(
                       key: ValueKey('name'),
                       keyboardType: TextInputType.text,
-                      decoration: InputDecoration(labelText: 'Nome Progetto'),
+                      decoration: InputDecoration(
+                        labelText: 'Nome Progetto',
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                BorderSide(color: Colors.blueGrey, width: 2)),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                BorderSide(color: Colors.black12, width: 2)),
+                        errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                BorderSide(color: Colors.red, width: 2)),
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
                       //per passare all'altro TextField con il pulsante next
                       textInputAction: TextInputAction.next,
                       focusNode: _nameFocusNode,
@@ -139,16 +155,32 @@ class _NewProjectFormState extends State<NewProjectForm> {
                         return null;
                       },
                       onSaved: (value) {
-                        //TODO: salvare variabile
+                        name = value;
                       },
                     ),
+                    SizedBox(height: 20),
 
                     //IMAGE LINK
                     TextFormField(
                       key: ValueKey('imageLink'),
                       keyboardType: TextInputType.url,
                       decoration: InputDecoration(
-                          labelText: 'URL immagine di copertina'),
+                        labelText: 'URL immagine di copertina',
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                BorderSide(color: Colors.blueGrey, width: 2)),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                BorderSide(color: Colors.black12, width: 2)),
+                        errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                BorderSide(color: Colors.red, width: 2)),
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
                       textInputAction: TextInputAction.next,
                       controller: _imageLinkController,
                       focusNode: _imageLinkFocusNode,
@@ -173,16 +205,34 @@ class _NewProjectFormState extends State<NewProjectForm> {
                         return null;
                       },
                       onSaved: (value) {
-                        //TODO: salvare variabile
+                        imageLink = value;
                       },
                     ),
+                    SizedBox(height: 20),
+
                     //DESCRIPTION
                     TextFormField(
                       key: ValueKey('description'),
                       keyboardType: TextInputType.multiline,
                       maxLines: 3,
                       maxLength: 140,
-                      decoration: InputDecoration(labelText: 'Descrizione'),
+                      decoration: InputDecoration(
+                        labelText: 'Descrizione',
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                BorderSide(color: Colors.blueGrey, width: 2)),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                BorderSide(color: Colors.black12, width: 2)),
+                        errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                BorderSide(color: Colors.red, width: 2)),
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
                       textInputAction: TextInputAction.newline,
                       focusNode: _descriptionFocusNode,
                       onFieldSubmitted: (_) => _saveForm(),
@@ -193,7 +243,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                         return null;
                       },
                       onSaved: (value) {
-                        //TODO: salvare variabile
+                        description = value;
                       },
                     ),
                     SizedBox(

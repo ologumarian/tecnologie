@@ -18,7 +18,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   String get uid {
-    return uid;
+    return _uid;
   }
 
   Future<void> fetchAndSetUsername() async {
