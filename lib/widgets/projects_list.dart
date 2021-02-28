@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:documentive/providers/auth_provider.dart';
-import 'package:documentive/widgets/auth/auth_form.dart';
+import 'package:documentive/widgets/not_found_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../models/project.dart';
 
 import '../widgets/project_item.dart';
 
@@ -35,24 +33,25 @@ class _ProjectsListState extends State<ProjectsList> {
         if (snapshot.hasError) {
           return Center(child: Text('Qualcosa è andatpo storto :('));
         }
-
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         }
-        return new ListView(
-          children: snapshot.data.docs.map((DocumentSnapshot document) {
-            return ProjectItem(
-              id: document.id,
-              date: document.data()['date'].toDate(),
-              description: document.data()['description'],
-              imageLink: document.data()['imageLink'],
-              name: document.data()['name'],
-              owner: document.data()['owner'],
-              isDrawerOpen: widget.disableScroll,
-              closeDrawer: widget.closeDrawer,
-            );
-          }).toList(),
-        );
+        return snapshot.data.docs.isEmpty
+            ? NotFoundWidget(tipo: messageType.Projects)
+            : ListView(
+                children: snapshot.data.docs.map((DocumentSnapshot document) {
+                  return ProjectItem(
+                    id: document.id,
+                    date: document.data()['date'].toDate(),
+                    description: document.data()['description'],
+                    imageLink: document.data()['imageLink'],
+                    name: document.data()['name'],
+                    owner: document.data()['owner'],
+                    isDrawerOpen: widget.disableScroll,
+                    closeDrawer: widget.closeDrawer,
+                  );
+                }).toList(),
+              );
       },
     );
   }

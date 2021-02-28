@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../helpers/file_picker.dart';
 
 import '../widgets/documents_list.dart';
+import '../widgets/not_found_widget.dart';
 
 class ProjectScreen extends StatefulWidget {
   @override
@@ -141,32 +142,8 @@ class _ProjectScreenState extends State<ProjectScreen> {
             ? Consumer<Documents>(
                 builder: (ctx, documents, _) => DocumentsList(),
               )
-            : Center(
-                child: Container(
-                  height: 200,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'Nessun documento presente.\nProva ad aggiungerne qualcuno ;)',
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                      Center(
-                        child: Container(
-                          height: 100,
-                          child: Image.asset(
-                              'assets/images/large_documentive.png'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+            : NotFoundWidget(
+                tipo: messageType.Documents,
               ),
       ),
       // body: DocumentsList()),
