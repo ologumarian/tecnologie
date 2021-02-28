@@ -19,7 +19,13 @@ class ProjectsList extends StatefulWidget {
   _ProjectsListState createState() => _ProjectsListState();
 }
 
-class _ProjectsListState extends State<ProjectsList> {
+class _ProjectsListState extends State<ProjectsList>
+    with AutomaticKeepAliveClientMixin<ProjectsList> {
+  ScrollController controllerB = ScrollController(keepScrollOffset: true);
+
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     final uid = Provider.of<AuthProvider>(context).uid;
@@ -27,6 +33,7 @@ class _ProjectsListState extends State<ProjectsList> {
         .collection('users')
         .doc(uid)
         .collection('projects');
+
     return StreamBuilder<QuerySnapshot>(
       stream: users.snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -43,6 +50,7 @@ class _ProjectsListState extends State<ProjectsList> {
         return snapshot.data.docs.isEmpty
             ? NotFoundWidget(tipo: messageType.Projects)
             : ListView(
+                controller: controllerB,
                 physics: widget.disableScroll
                     ? const NeverScrollableScrollPhysics()
                     : const AlwaysScrollableScrollPhysics(),

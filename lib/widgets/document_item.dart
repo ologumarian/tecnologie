@@ -50,7 +50,7 @@ class _DocumentItemState extends State<DocumentItem> {
         // https://firebasestorage.googleapis.com/v0/b/app-tecnologie.appspot.com/o/iT0ghv6EeAMB6Kxzu15Z%2FAppunti%20db%20Giornalino.pdf?alt=media&token=6145e4f0-80d6-41ed-8104-49585c5020f8
         PdftronFlutter.openDocument(
             "https://firebasestorage.googleapis.com/v0/b/app-tecnologie.appspot.com/o/iT0ghv6EeAMB6Kxzu15Z%2FAppunti%20db%20Giornalino.pdf?alt=media&token=6145e4f0-80d6-41ed-8104-49585c5020f8");
-        print('TAP DOCUMENTO');
+        print('DOCUMENT VIEWER version ' + _version);
       },
       child: Stack(
         children: [

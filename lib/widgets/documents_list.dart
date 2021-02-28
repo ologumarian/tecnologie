@@ -13,12 +13,16 @@ class DocumentsList extends StatefulWidget {
 class _DocumentsListState extends State<DocumentsList> {
   @override
   Widget build(BuildContext context) {
-    final documentsData = Provider.of<Documents>(context);
-    final documents = documentsData.items;
+    // final documentsData = Provider.of<Documents>(context);
+    // final documents = documentsData.items;
 
-    return ListView.builder(
-      itemCount: documents.length,
-      itemBuilder: (ctx, i) => DocumentItem(documents[i]),
+    return Consumer<Documents>(
+      builder: (context, documents, _) {
+        return ListView.builder(
+          itemCount: documents.items.length,
+          itemBuilder: (ctx, i) => DocumentItem(documents.items[i]),
+        );
+      },
     );
   }
 }

@@ -1,6 +1,7 @@
-import 'package:documentive/screens/project_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+
+import '../screens/project_screen.dart';
 
 class ProjectItem extends StatelessWidget {
   final String id;
