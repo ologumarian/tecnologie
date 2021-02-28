@@ -40,13 +40,13 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => Documents(),
+          create: (_) => AuthProvider(),
         ),
         ChangeNotifierProvider(
           create: (_) => Projects(list: [], uid: '', user: ''),
         ),
         ChangeNotifierProvider(
-          create: (_) => AuthProvider(),
+          create: (_) => Documents(),
         ),
 
         //Il proxy provider effettua la DEPENDENCY INJECTION
