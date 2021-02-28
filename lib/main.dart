@@ -1,8 +1,3 @@
-import 'package:documentive/providers/auth_provider.dart';
-import 'package:documentive/providers/documents.dart';
-import 'package:documentive/providers/projects.dart';
-import 'package:documentive/screens/project_screen.dart';
-import 'package:documentive/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,13 +5,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
+import './providers/auth_provider.dart';
+import './providers/documents.dart';
+import './providers/projects.dart';
+
+import './screens/project_screen.dart';
+import './screens/splash_screen.dart';
 import './screens/drawer_screen.dart';
 import './screens/home_screen.dart';
 import './screens/auth_screen.dart';
 import './screens/new_project_screen.dart';
 //import './screens/splash_screen.dart';
-
-//import './screens/auth_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); //NUOVA CONFIG FIREBASE #4
@@ -46,7 +45,8 @@ class MyApp extends StatelessWidget {
           create: (_) => Projects(list: [], uid: '', user: ''),
         ),
         ChangeNotifierProvider(
-          create: (_) => Documents(),
+          create: (_) =>
+              Documents(idCollection: '', items: [], uploads: [], uid: ''),
         ),
 
         //Il proxy provider effettua la DEPENDENCY INJECTION
@@ -59,6 +59,22 @@ class MyApp extends StatelessWidget {
             user: auth.username,
           ),
         ),
+
+        // ChangeNotifierProxyProvider<AuthProvider, Documents>(
+        //   //importante passare il contesto e inizializzare con create
+        //   create: (ctx) => Documents(),
+        //   update: (ctx, auth, previousDocuments) => Documents(
+        //     idCollection: previousDocuments.idCollection == null
+        //         ? ''
+        //         : previousDocuments.idCollection,
+        //     uploads: previousDocuments.uploads == null
+        //         ? []
+        //         : previousDocuments.uploads,
+        //     items:
+        //         previousDocuments.items == null ? [] : previousDocuments.items,
+        //     uid: auth.uid,
+        //   ),
+        // ),
       ],
       child: FutureBuilder(
         // Initialize FlutterFire:

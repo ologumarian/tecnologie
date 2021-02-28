@@ -6,11 +6,36 @@ import '../models/document.dart';
 
 class Documents with ChangeNotifier {
   String _idCollection;
-  List<firebase_storage.UploadTask> _uploads = [];
-  List<Document> _items = [];
+  List<firebase_storage.UploadTask> _uploads;
+  List<Document> _items;
+  String _uid;
+
+  Documents({
+    String idCollection,
+    List<firebase_storage.UploadTask> uploads,
+    List<Document> items,
+    String uid,
+  }) {
+    _idCollection = idCollection;
+    _uploads = uploads;
+    _items = items;
+    _uid = uid;
+  }
+
+  String get idCollection {
+    return _idCollection;
+  }
+
+  List<firebase_storage.UploadTask> get uploads {
+    return _uploads;
+  }
 
   List<Document> get items {
     return [..._items];
+  }
+
+  String get uid {
+    return _uid;
   }
 
   void setCollection(String collection) {
@@ -98,5 +123,12 @@ class Documents with ChangeNotifier {
     // // Resume the upload.
     // bool resumed = await task.resume();
     // print('resumed, $resumed');
+  }
+
+  Future<void> getDocumentURL({String projectId, String docName}) async {
+    String downloadURL = await firebase_storage.FirebaseStorage.instance
+        .ref()
+        // .ref('users/${projectId}/${docName}')
+        .getDownloadURL();
   }
 }

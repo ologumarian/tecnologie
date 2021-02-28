@@ -36,9 +36,16 @@ class _ProjectsListState extends State<ProjectsList> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         }
+        if (snapshot.data.docs.isEmpty) {
+          NotFoundWidget(tipo: messageType.Projects);
+        }
+
         return snapshot.data.docs.isEmpty
             ? NotFoundWidget(tipo: messageType.Projects)
             : ListView(
+                physics: widget.disableScroll
+                    ? const NeverScrollableScrollPhysics()
+                    : const AlwaysScrollableScrollPhysics(),
                 children: snapshot.data.docs.map((DocumentSnapshot document) {
                   return ProjectItem(
                     id: document.id,
@@ -53,15 +60,35 @@ class _ProjectsListState extends State<ProjectsList> {
                 }).toList(),
               );
       },
+
+      // return ListView.builder(
+      //   physics: widget.disableScroll
+      //       ? const NeverScrollableScrollPhysics()
+      //       : const AlwaysScrollableScrollPhysics(),
+      //   itemCount: snapshot.data.docs.length,
+      //   itemBuilder: (context, i) {
+      //     final item = snapshot.data.docs[i];
+      //     return ProjectItem(
+      //       id: item[i].id,
+      //       date: item.data()['date'].toDate(),
+      //       description: item.data()['description'].toString(),
+      //       imageLink: item.data()['imageLink'].toString(),
+      //       name: item.data()['name'].toString(),
+      //       owner: item.data()['owner'].toString(),
+      //       isDrawerOpen: widget.disableScroll,
+      //       closeDrawer: widget.closeDrawer,
+      //     );
+      //   },
+      // );
     );
   }
 
   // @override
   // Widget build(BuildContext context) {
   // return ListView.builder(
-  //   physics: widget.disableScroll
-  //       ? const NeverScrollableScrollPhysics()
-  //       : const AlwaysScrollableScrollPhysics(),
+  // physics: widget.disableScroll
+  //     ? const NeverScrollableScrollPhysics()
+  //     : const AlwaysScrollableScrollPhysics(),
   //   itemCount: DUMMY_PROJECTS.length,
   //   itemBuilder: (context, index) => ProjectItem(
   //     id: DUMMY_PROJECTS[index].id,
@@ -70,8 +97,8 @@ class _ProjectsListState extends State<ProjectsList> {
   //     description: DUMMY_PROJECTS[index].description,
   //     date: DUMMY_PROJECTS[index].date,
   //     imageLink: DUMMY_PROJECTS[index].imageLink,
-  //     isDrawerOpen: widget.disableScroll,
-  //     closeDrawer: widget.closeDrawer,
+  // isDrawerOpen: widget.disableScroll,
+  // closeDrawer: widget.closeDrawer,
   //   ),
   // );
   // }

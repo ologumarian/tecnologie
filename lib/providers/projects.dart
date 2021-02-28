@@ -28,6 +28,36 @@ class Projects with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProjects() {
+    // CollectionReference users = FirebaseFirestore.instance
+    //     .collection('users')
+    //     .doc(uid)
+    //     .collection('projects');
+
+    //     final projects = snapshot.data.docs.map((DocumentSnapshot document) {
+    //       return Project(
+    //         id: document.id,
+    //         date: document.data()['date'].toDate(),
+    //         description: document.data()['description'],
+    //         imageLink: document.data()['imageLink'],
+    //         name: document.data()['name'],
+    //         owner: document.data()['owner'],
+    //       );
+    //     }).toList();
+
+    // StreamBuilder<QuerySnapshot>(
+    //   stream: users.snapshots(),
+    //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    //     if (snapshot.hasError) {
+    //       return Center(child: Text('Qualcosa è andatpo storto :('));
+    //     }
+    //     if (snapshot.connectionState == ConnectionState.waiting) {
+    //       return Center(child: CircularProgressIndicator());
+    //     }
+    //     if (snapshot.data.docs.isEmpty) {
+    //       NotFoundWidget(tipo: messageType.Projects);
+    //     }
+    // );
+
     return null;
   }
 

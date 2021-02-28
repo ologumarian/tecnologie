@@ -35,6 +35,9 @@ dependencies:
   firebase_storage: ^7.0.0
   file_picker: ^2.1.6
   http: ^0.12.2
+  pdftron_flutter:
+    git:
+      url: git://github.com/PDFTron/pdftron-flutter.git
 
 dev_dependencies:
   flutter_test:
