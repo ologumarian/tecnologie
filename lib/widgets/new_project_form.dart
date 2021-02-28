@@ -114,7 +114,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(25),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -266,7 +266,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                         ],
                       ),
                       child: _imageLinkController.text.isEmpty
-                          ? Center(child: Text('Inserisci un URL'))
+                          ? Center(child: Text('Anteprima immagine'))
                           : ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Image.network(
