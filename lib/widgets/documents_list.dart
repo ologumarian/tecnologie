@@ -15,7 +15,7 @@ class DocumentsList extends StatefulWidget {
 class _DocumentsListState extends State<DocumentsList> {
   @override
   Widget build(BuildContext context) {
-    final projectsData = Provider.of<Projects>(context, listen: false);
+    final projectsData = Provider.of<Projects>(context);
     // final documents = documentsData.items;
 
     return Consumer<Documents>(

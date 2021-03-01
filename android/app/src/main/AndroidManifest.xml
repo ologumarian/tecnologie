@@ -2,7 +2,7 @@
     package="com.example.documentive">
    <application
         android:label="documentive"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_documentive">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
