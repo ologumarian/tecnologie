@@ -11,10 +11,12 @@ class NotFoundWidget extends StatelessWidget {
 
     switch (tipo) {
       case messageType.Documents:
-        messaggio = 'Nessun documento presente.\nProva ad aggiungerne qualcuno';
+        messaggio =
+            'Nessun documento presente.\nProva ad aggiungerne qualcuno ;)';
         break;
       case messageType.Projects:
-        messaggio = 'Nessun progetto presente.\nProva ad aggiungerne qualcuno';
+        messaggio =
+            'Nessun progetto presente.\nProva ad aggiungerne qualcuno ;)';
         break;
       default:
         messaggio = 'Errore 404.\n Not found.';

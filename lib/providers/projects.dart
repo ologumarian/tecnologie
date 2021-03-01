@@ -8,11 +8,20 @@ class Projects with ChangeNotifier {
   List<Project> _items = [];
   String _uid = '';
   String _username = '';
+  String _currentProjectId = '';
 
   Projects({List<Project> list, String uid, String user}) {
     _items = list;
     _uid = uid;
     _username = user;
+  }
+
+  String get currentProjectId {
+    return _currentProjectId;
+  }
+
+  void setCurrentProjectId(String id) {
+    _currentProjectId = id;
   }
 
   List<Project> get items {

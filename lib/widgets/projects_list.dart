@@ -38,7 +38,7 @@ class _ProjectsListState extends State<ProjectsList>
       stream: users.snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Center(child: Text('Qualcosa è andatpo storto :('));
+          return Center(child: Text('Qualcosa è andato storto :('));
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());

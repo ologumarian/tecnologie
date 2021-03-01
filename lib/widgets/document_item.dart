@@ -1,25 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pdftron_flutter/pdftron_flutter.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '../models/document.dart';
 
 class DocumentItem extends StatefulWidget {
+  final String projId;
+  final String docId;
   final Document docData;
 
-  DocumentItem(this.docData);
+  DocumentItem({this.projId, this.docId, this.docData});
 
   @override
   _DocumentItemState createState() => _DocumentItemState();
 }
 
 class _DocumentItemState extends State<DocumentItem> {
+  String _docURL = '';
   String _version = 'Unknown';
 
   @override
   void initState() {
     super.initState();
+    getDocumentURL();
     initPlatformState();
+  }
+
+  Future<void> getDocumentURL() async {
+    String url = await firebase_storage.FirebaseStorage.instance
+        .ref('${widget.projId}/${widget.docId}')
+        .getDownloadURL();
+    await print('DOCUMENT URL: ' + url);
+    setState(() {
+      _docURL = url;
+    });
   }
 
   // Platform messages are asynchronous, so we initialize via an async method.
@@ -48,8 +63,7 @@ class _DocumentItemState extends State<DocumentItem> {
     return GestureDetector(
       onTap: () {
         // https://firebasestorage.googleapis.com/v0/b/app-tecnologie.appspot.com/o/iT0ghv6EeAMB6Kxzu15Z%2FAppunti%20db%20Giornalino.pdf?alt=media&token=6145e4f0-80d6-41ed-8104-49585c5020f8
-        PdftronFlutter.openDocument(
-            "https://firebasestorage.googleapis.com/v0/b/app-tecnologie.appspot.com/o/iT0ghv6EeAMB6Kxzu15Z%2FAppunti%20db%20Giornalino.pdf?alt=media&token=6145e4f0-80d6-41ed-8104-49585c5020f8");
+        PdftronFlutter.openDocument(_docURL);
         print('DOCUMENT VIEWER version ' + _version);
       },
       child: Stack(

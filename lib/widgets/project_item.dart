@@ -1,5 +1,7 @@
+import 'package:documentive/providers/projects.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/project_screen.dart';
 
@@ -31,6 +33,9 @@ class ProjectItem extends StatelessWidget {
       onTap: isDrawerOpen
           ? closeDrawer //Se il drawer è aperto imposto la funzione per chiuderlo
           : () {
+              Provider.of<Projects>(context, listen: false)
+                  .setCurrentProjectId(id);
+              print('CURRENT PROJECT ID: ' + id);
               Navigator.push(
                 context,
                 PageRouteBuilder(
