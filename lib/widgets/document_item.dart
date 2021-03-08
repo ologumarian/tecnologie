@@ -19,12 +19,32 @@ class DocumentItem extends StatefulWidget {
 class _DocumentItemState extends State<DocumentItem> {
   String _docURL = '';
   String _version = 'Unknown';
+  String extensionIcon = 'assets/images/placeholder_documentive.png';
+
+  void setExtensionIcon() {
+    String ext = widget.docData.id.split('.').last;
+    switch (ext) {
+      case 'pdf':
+        extensionIcon = 'assets/images/pdf.png';
+        break;
+      case 'doc':
+        extensionIcon = 'assets/images/pdf.png';
+        break;
+      case 'jpg':
+        extensionIcon = 'assets/images/jpg.png';
+        break;
+      case 'png':
+        extensionIcon = 'assets/images/png.png';
+        break;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     getDocumentURL();
     initPlatformState();
+    setExtensionIcon();
   }
 
   Future<void> getDocumentURL() async {
@@ -118,9 +138,10 @@ class _DocumentItemState extends State<DocumentItem> {
                   placeholder:
                       AssetImage('assets/images/placeholder_documentive.png'),
                   image: AssetImage(
-                    widget.docData.id.split('.').last == 'pdf'
-                        ? 'assets/images/pdf.png'
-                        : 'assets/images/doc.png',
+                    // widget.docData.id.split('.').last == 'pdf'
+                    //     ? 'assets/images/pdf.png'
+                    //     : 'assets/images/doc.png',
+                    extensionIcon,
                   ),
                   fit: BoxFit.cover,
                 ),

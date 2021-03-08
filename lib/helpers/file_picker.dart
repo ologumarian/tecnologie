@@ -11,7 +11,7 @@ class FilePickerHelper {
       _result = await FilePicker.platform.pickFiles(
         allowMultiple: true,
         type: FileType.custom,
-        allowedExtensions: ['doc', 'pdf', 'docx'],
+        allowedExtensions: ['doc', 'pdf', 'docx', 'png', 'jpg'],
       );
 
       if (_result != null) {

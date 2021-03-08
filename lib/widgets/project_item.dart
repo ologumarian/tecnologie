@@ -113,7 +113,7 @@ class ProjectItem extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       description,
-                      overflow: TextOverflow.ellipsis,
+                      overflow: TextOverflow.fade,
                       softWrap: true,
                       maxLines: 3,
                       style: TextStyle(
@@ -138,6 +138,8 @@ class ProjectItem extends StatelessWidget {
                   SizedBox(width: 5),
                   Text(
                     DateFormat('HH:mm - dd MMM yyyy').format(date),
+                    overflow: TextOverflow.fade,
+                    softWrap: true,
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey[600],
