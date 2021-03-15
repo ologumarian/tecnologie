@@ -1,8 +1,9 @@
 # documentive
 
 Documentive è un'app dedicata al salvataggio e alla gestione di documenti su cloud.
-L'utente ha la possibilità di organizzare i suoi documenti in progetti e di suddividerli
-in cartelle.
+L'utente ha la possibilità di creare dei progetti e caricare al loro interno i documenti
+salvati in locale sullo smartphpne. Una volta caricati ha la possibilità di isualizzarli
+all'interno dell'app e condivederli.
 
 ## Getting Started
 
